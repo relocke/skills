@@ -23,10 +23,10 @@ These skills are intended to:
 
 Additional skills and tools will be added over time.
 
-## Structure
+## Repository structure
 
 ```text
-skills/
+relocke/skills
 ├── README.md
 └── skills/
     ├── agentic-abi-antelope.md
