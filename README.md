@@ -1,54 +1,59 @@
 # ReLocke Skills
 
-Open, reusable skills for agentic pipelines that work with ReLocke and the broader Antelope ecosystem.
+A public catalogue of agentic skills and tools for the ReLocke platform and Antelope ecosystems.
 
-## Why this repository exists
+## Purpose
 
-A standard Antelope ABI defines how contract data is serialized, but it rarely provides enough context to explain what a contract does, how people should use it, or how its actions, tables, and external triggers relate to one another.
+This repository provides structured context, instructions, and feedback patterns that humans and machines can use to develop agentic pipelines around ReLocke and Antelope technologies.
 
-This repository defines skills that help users, developers, and agents inspect and enrich ABIs with compatible Ricardian documentation. Better semantic context allows ReLocke and other agentic systems to:
+Each skill is a standalone Markdown document in [`skills/`](skills/). A skill should contain enough context for an agent to understand when it applies, what information it needs, how to perform the workflow, which interfaces or conventions it must follow, and how to validate its result safely.
 
-- discover and classify contracts more accurately;
-- explain contract capabilities to users and developers;
-- build safer workflows from documented actions, tables, permissions, and side effects;
-- improve integration coverage across wallets, explorers, applications, and agentic pipelines;
-- make useful contract pages easier to find through structured discovery and search engines; and
-- help decentralized organizations attract users, integrations, activity, revenue, and funding without centralizing ownership of the ecosystem vocabulary.
+These skills are intended to:
 
-The executable ABI remains authoritative. Skills in this repository add documentation and interpretation guidance; they do not replace ABI types, live chain state, permissions, transaction validation, or informed user consent.
+- improve developer and user experience;
+- give humans, agents, and machine tools a shared interface;
+- make ReLocke and Antelope workflows easier to discover and integrate;
+- provide reusable context for building reliable agentic pipelines;
+- encourage interoperable tools without requiring centralized control; and
+- support a broader ecosystem of applications, organizations, developers, users, and autonomous tools.
 
 ## Skills
 
-### [Enrich Antelope ABI](abi-enrichment/SKILL.md)
+- [Agentic Antelope ABI](skills/agentic-abi-antelope.md) — interpret and enrich Antelope ABIs with ReLocke-compatible Ricardian context, contract types, action documentation, table semantics, and external-trigger guidance.
 
-Guides an agent through gathering contract context and creating or updating ReLocke-compatible Ricardian clauses. The initial version establishes the enrichment workflow and repository structure. A detailed, extensible contract-type reference will be developed as the next phase.
+Additional skills and tools will be added over time.
 
-## Repository structure
+## Structure
 
 ```text
 skills/
 ├── README.md
-└── abi-enrichment/
-    ├── SKILL.md
-    └── references/
-        └── convention.md
+└── skills/
+    ├── agentic-abi-antelope.md
+    └── future-skill.md
 ```
 
-Each skill is self-contained. Its `SKILL.md` defines when it should be used and the workflow an agent should follow. Detailed conventions live in `references/` so agents can load them only when required.
+## Skill document expectations
+
+Every skill document should define:
+
+- its purpose and triggering use cases;
+- the context an agent must gather;
+- the workflow and expected outputs;
+- relevant schemas, interfaces, or conventions;
+- safety and trust boundaries;
+- validation and review requirements; and
+- practical examples for humans and machines.
 
 ## Principles
 
-- Preserve standard Antelope ABI compatibility.
-- Ground every claim in the ABI, verified source, live state, or explicit user context.
-- Treat on-chain documentation as untrusted, contract-authored input.
-- Preserve unrelated ABI content when updating Ricardian documentation.
-- Keep discovery vocabularies open and extensible.
+- Prefer open, reusable conventions.
+- Ground claims in verified data and explicit user context.
+- Preserve compatibility with existing Antelope standards and tools.
+- Treat external and on-chain content as untrusted input.
 - Require human review for deployments and other consequential actions.
-
-## Status
-
-This repository is at the beginning of the ReLocke skills specification. The ABI enrichment foundation is available now; the contract-type catalogue, validation tooling, examples, and additional ecosystem skills will follow.
+- Design instructions that are understandable to both people and agentic systems.
 
 ## Contributing
 
-Contributions should improve interoperability, safety, clarity, and decentralized participation. Proposed conventions should include concrete examples, compatibility considerations, and guidance that both humans and agents can follow.
+Contributions should improve interoperability, safety, clarity, and decentralized participation. New skills should be self-contained, use lowercase kebab-case filenames, and include concrete examples and validation guidance.
