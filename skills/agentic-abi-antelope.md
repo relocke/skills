@@ -128,6 +128,10 @@ Implements game rules, player state, progression, outcomes, or an on-chain game 
 
 Manages proposals, voting, approvals, elections, protocol configuration, or other collective decision-making processes.
 
+### `legacy`
+
+Identifies an older ecosystem contract retained for compatibility or access to legacy assets and behavior. Chain configuration is authoritative for this classification; do not infer it from an old-looking account name or ABI.
+
 ### `marketplace`
 
 Manages listings, offers, auctions, purchases, rentals, royalties, or seller settlement. Add an asset type only when the contract also implements that asset behavior.
@@ -148,6 +152,10 @@ Publishes, aggregates, verifies, or delivers externally sourced data for other c
 
 Handles checkout, billing, invoicing, payment routing, transfers, subscriptions, or settlement where payment processing is a substantial purpose.
 
+### `relocke`
+
+Identifies a contract authored and operated by ReLocke for ReLocke website features or services. This is an authorship classification, so use the chain configuration rather than inferring it from an account name.
+
 ### `registry`
 
 Maintains an authoritative directory, mapping, identity record, name service, certification record, or status registry queried by users or contracts.
@@ -156,9 +164,13 @@ Maintains an authoritative directory, mapping, identity record, name service, ce
 
 Locks or delegates assets or resources for rewards, participation, allocation, or network or protocol security.
 
+### `system`
+
+Identifies a core blockchain ecosystem contract from the chain configuration, including the chain system account and core token contracts. A system contract may also have behavioral types: for example, `eosio.token` is `system,token`, `eosio` is `system`, and Vaulta's `core.vaulta` is `system,token`.
+
 ### `token`
 
-Issues or manages a fungible asset, including supply, balances, and transfers.
+Issues or manages a fungible asset. Assign this type only after structurally verifying the `create`, `issue`, `retire`, and `transfer` actions and the `accounts` and `stat` tables, then confirming a stat scope contains a valid symbol and `get_currency_stats` returns a maximum supply. Merely holding or accepting an externally issued token does not qualify.
 
 ### `treasury`
 
