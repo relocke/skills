@@ -1,6 +1,6 @@
 ---
 name: agentic-abi-antelope
-description: Interpret, explain, validate, or enrich an Antelope smart-contract ABI with ReLocke-compatible Ricardian documentation. Use when an agent needs to gather contract context, assign one or more contract types, create or update ui.contract metadata, document actions or tables, describe externally triggered behavior, or prepare an ABI for discovery and integration by humans and agentic pipelines.
+description: Interpret, explain, validate, or enrich an Antelope smart-contract ABI with ReLocke-compatible Ricardian documentation, including safe SVG contract icons and optional exact token-symbol associations. Use when an agent needs to gather contract context, assign one or more contract types, create or update ui.contract metadata, document actions or tables, describe externally triggered behavior, or prepare an ABI for discovery and integration by humans and agentic pipelines.
 ---
 
 # Agentic Antelope ABI
@@ -17,7 +17,7 @@ An enriched ABI should help a user or agent:
 - understand table meaning, scope, units, lifecycle, and relationships;
 - identify actions on other contracts that trigger documented behavior;
 - construct safer integration and agentic workflows; and
-- improve structured discovery across ReLocke, the Antelope ecosystem, and search engines.
+- represent a contract with one safe on-chain SVG and optionally associate it with one exact issued token symbol; and\n- improve structured discovery across ReLocke, the Antelope ecosystem, and search engines.
 
 Enrichment is documentation, not authority. Standard ABI fields, deployed code, permissions, live chain state, transaction validation, and explicit user intent remain authoritative.
 
@@ -39,6 +39,22 @@ Issues and manages a fungible token and supports transfers between documented ne
 Use the overview as the body of exactly one `ricardian_clauses` entry with the ID `ui.contract`.
 
 The obsolete singular `type` and `categories` fields are not part of this convention. Use only `types`.
+
+## Contract and token icon
+
+Use at most one clause with the exact ID `ui.contract.icon`. Its body contains `relocke.ui/1` frontmatter followed by one static SVG:
+
+```json
+{
+  "id": "ui.contract.icon",
+  "body": "---\\nschema: relocke.ui/1\\nsymbol-code: RLOC\\n---\\n<svg xmlns=\\"http://www.w3.org/2000/svg\\" viewBox=\\"0 0 32 32\\"><path d=\\"M4 4h24v24H4z\\"/></svg>"
+}
+```
+
+The `symbol-code` field is optional. Without it, the SVG identifies only the contract or project. With it, the same SVG may also identify the token at the exact chain, contract account, and symbol-code tuple. The value must contain 1–7 uppercase ASCII letters and should be selected from a verified live `stat` scope. One icon can target at most one token symbol in `relocke.ui/1`; never apply it to other symbols issued by the same contract.
+
+Accept at most 32 KiB of well-formed static SVG with the SVG namespace and a numeric `viewBox`. Reject scripts, event attributes, CSS/style blocks, animation, `foreignObject`, embedded documents or media, external resources, and data URLs. Render the SVG only as an image, never as inline markup, an object, embed, or frame. Preserve unknown icon metadata, report duplicate icon clauses, and do not add raw SVG to search indexes or agent context by default.
+
 
 ## Context required before interpreting or updating an ABI
 
@@ -270,7 +286,7 @@ External-trigger documentation does not prove that a payment is accepted, grant 
 1. Confirm chain and contract identity.
 2. Fetch and retain the complete current ABI.
 3. Parse standard types, structs, variants, actions, and tables before interpreting documentation.
-4. Inventory `ui.contract`, action Ricardian contracts, `table.*`, `external.*`, and legacy `callable.*` clauses.
+4. Inventory `ui.contract`, `ui.contract.icon`, action Ricardian contracts, `table.*`, `external.*`, and legacy `callable.*` clauses.
 5. Gather the required verified context and identify uncertainty.
 6. Choose all suitable types and explain why each applies.
 7. Draft the smallest overview, action, table, and external-trigger changes needed.
@@ -325,7 +341,7 @@ Before presenting or deploying an enrichment, confirm:
 - complete ABI retrieval succeeded;
 - assigned types use lowercase kebab-case and contain no duplicates;
 - each assigned type represents substantial contract behavior;
-- there is at most one normalized `ui.contract` clause;
+- there is at most one normalized `ui.contract` clause;\n- there is at most one validated `ui.contract.icon` clause, and any `symbol-code` matches an exact verified token identity;
 - action documentation maps to real actions;
 - table clauses map to real tables;
 - external-trigger table references are valid;
